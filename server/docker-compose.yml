@@ -1,0 +1,32 @@
+# ─────────────────────────────────────────────────────────
+# SocialCrypt — Docker Compose (Local Development)
+#
+# Start:   docker compose up -d
+# Stop:    docker compose down
+# Logs:    docker compose logs -f
+# Reset:   docker compose down -v   (⚠️ deletes all messages!)
+# ─────────────────────────────────────────────────────────
+
+services:
+  socialcrypt:
+    build: .
+    container_name: socialcrypt
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+    volumes:
+      # Persist the message store on a named volume
+      - socialcrypt_data:/app/data
+    # Health check
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/stats"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+volumes:
+  socialcrypt_data:

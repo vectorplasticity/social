@@ -1,0 +1,30 @@
+# ─────────────────────────────────────────────────────────
+# SocialCrypt — .dockerignore
+# 
+# Keeps the Docker image small by excluding dev files.
+# Only server.js and this Dockerfile are needed at runtime.
+# ─────────────────────────────────────────────────────────
+
+# Node
+node_modules
+npm-debug.log
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Data (don't bundle local messages into the image)
+data/
+
+# Cloud configs (not needed inside the container)
+.railway.json
+fly.toml
+.render.yaml
+
+# Docs
+README.md
